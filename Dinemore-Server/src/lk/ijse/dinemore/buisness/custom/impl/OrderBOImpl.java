@@ -56,7 +56,17 @@ public class OrderBOImpl implements OrderBO{
 
     @Override
     public boolean deleteOrder(String oid) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            orderRepository.setSesstion(session);
+            session.beginTransaction();
+            Orders orders = orderRepository.findByID(oid);
+            boolean result = false;
+            if (orders != null) {
+                result = orderRepository.delete(orders);
+            }
+            session.getTransaction().commit();
+            return result;
+        }
     }
 
     @Override
@@ -66,7 +76,24 @@ public class OrderBOImpl implements OrderBO{
 
     @Override
     public boolean updateStatus(OrderDTO orderDTO) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            orderRepository.setSesstion(session);
+            session.beginTransaction();
+            Orders orders = new Orders(
+                    orderDTO.getOrder_id(),
+                    orderDTO.getReception_id(),
+                    orderDTO.getDate(),
+                    orderDTO.getTime(),
+                    orderDTO.getCus_name(),
+                    orderDTO.getTp_no(),
+                    orderDTO.getQty(),
+                    orderDTO.getStatus()
+            );
+            boolean result = orderRepository.update(orders);
+            session.getTransaction().commit();
+            return result;
+        }
     }
 
     @Override

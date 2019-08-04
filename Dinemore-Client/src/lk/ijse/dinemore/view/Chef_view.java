@@ -285,8 +285,8 @@ public class Chef_view extends javax.swing.JFrame implements Observer {
                     Integer.parseInt(txtqty.getText()),
                     ststus
             );
-            boolean addorder = ManageOrderController.updateCustomer(orderDTO);
-            if (addorder) {
+            boolean updateCustomer = ManageOrderController.updateCustomer(orderDTO);
+            if (updateCustomer) {
                 JOptionPane.showMessageDialog(this, "Order has been taken Successfully");
                 loadAllOrders();
 

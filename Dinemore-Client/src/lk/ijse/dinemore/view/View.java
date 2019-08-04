@@ -335,19 +335,7 @@ public class View extends javax.swing.JFrame implements Observer{
 
     private void tbl_RecMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_RecMouseClicked
 
-//         int selectedRow = tbl_Rec.getSelectedRow();
-//        String oid = dtm.getValueAt(selectedRow, 0).toString();
-//        String cusname = dtm.getValueAt(selectedRow, 1).toString();
-//        String tp = dtm.getValueAt(selectedRow, 2).toString();
-//        String tqty = dtm.getValueAt(selectedRow, 4).toString();
-//        cstatus = dtm.getValueAt(selectedRow, 5).toString();
-//
-//        avqty = Integer.parseInt(tqty);
-//
-//        txt_oid.setText(oid);
-//        txt_custName.setText(cusname);
-//        txt_telno.setText(tp);
-//        
+       
         
     }//GEN-LAST:event_tbl_RecMouseClicked
 
