@@ -7,6 +7,8 @@ package lk.ijse.dinemore.view;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Observable;
 import java.util.logging.Level;
@@ -31,6 +33,7 @@ public class View extends javax.swing.JFrame implements Observer{
        public  View() throws RemoteException, Exception {
         initComponents();
         loadAllCustomers();
+        getLocalTime();
         UnicastRemoteObject.exportObject(this, 0);
        ManageOrderController.getSubeject().registerObserver(this);
       
@@ -445,5 +448,28 @@ public class View extends javax.swing.JFrame implements Observer{
     @Override
     public void updateObservers() throws Exception {
         loadAllCustomers();
+    }
+    
+    
+    
+     private void getLocalTime() {
+         new Thread(new Runnable() {
+             @Override
+             public void run() {
+                 while(true){
+                     Date curDate =new Date();
+                     SimpleDateFormat dateFormat=new SimpleDateFormat("HH:mm:ss aa");
+                     String currenTime=dateFormat.format(curDate);
+                     
+                     txt_time.setText(currenTime);
+                      
+                     try {
+                         Thread.sleep(1000);
+                     } catch (InterruptedException ex) {
+                        
+                     }
+                 }
+             }
+         }).start();
     }
 }

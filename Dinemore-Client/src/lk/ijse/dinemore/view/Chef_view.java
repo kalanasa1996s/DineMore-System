@@ -7,6 +7,8 @@ package lk.ijse.dinemore.view;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,6 +31,7 @@ public class Chef_view extends javax.swing.JFrame implements Observer {
         try {
             initComponents();
             getAllOrders();
+            getLocalTime();
 //
             loadAllOrders();
             UnicastRemoteObject.exportObject(this, 0);
@@ -78,6 +81,8 @@ public class Chef_view extends javax.swing.JFrame implements Observer {
         txtcustname = new javax.swing.JTextField();
         txttp = new javax.swing.JTextField();
         txtqty = new javax.swing.JTextField();
+        jPanel8 = new javax.swing.JPanel();
+        time = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -142,30 +147,37 @@ public class Chef_view extends javax.swing.JFrame implements Observer {
         });
         jScrollPane1.setViewportView(tblchef);
 
-        jPanel6.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(104, 30, 798, 171));
+        jPanel6.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(104, 30, 770, 171));
 
         jLabel2.setFont(new java.awt.Font("Sylfaen", 1, 18)); // NOI18N
         jLabel2.setText("ORDERS");
         jPanel6.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 14, 79, -1));
 
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabel3.setText("ORDER ID");
-        jPanel6.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(39, 208, 84, 36));
+        jPanel6.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 250, 84, 36));
 
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabel4.setText("RECEPTION ID");
-        jPanel6.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(39, 276, 84, 36));
+        jPanel6.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 320, 100, 36));
 
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabel6.setText("DATE");
-        jPanel6.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(39, 408, 84, 36));
+        jPanel6.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 400, 84, 36));
 
+        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabel7.setText("TIME");
-        jPanel6.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(39, 474, 84, 36));
+        jPanel6.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 480, 84, 36));
 
+        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabel8.setText("CUSTOMER NAME");
         jPanel6.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(39, 540, 130, 36));
 
+        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabel9.setText("T.P");
         jPanel6.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(39, 606, 130, 36));
 
+        jLabel10.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabel10.setText("QTY");
         jPanel6.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(39, 672, 130, 36));
 
@@ -186,16 +198,47 @@ public class Chef_view extends javax.swing.JFrame implements Observer {
         jButton2.setBackground(new java.awt.Color(255, 0, 0));
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("FINISH");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
         jPanel7.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(48, 188, 135, 39));
 
         jPanel6.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(662, 317, 240, -1));
-        jPanel6.add(txtoid, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 210, 380, 40));
-        jPanel6.add(txtrid, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 280, 380, 40));
-        jPanel6.add(txtdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 400, 390, 40));
-        jPanel6.add(txttime, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 480, 390, 40));
-        jPanel6.add(txtcustname, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 550, 390, 40));
-        jPanel6.add(txttp, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 620, 390, 40));
+        jPanel6.add(txtoid, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 250, 380, 40));
+        jPanel6.add(txtrid, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 320, 380, 40));
+        jPanel6.add(txtdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 400, 390, 40));
+        jPanel6.add(txttime, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 480, 390, 40));
+        jPanel6.add(txtcustname, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 550, 390, 40));
+        jPanel6.add(txttp, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 620, 390, 40));
         jPanel6.add(txtqty, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 690, 390, 40));
+
+        jPanel8.setBackground(new java.awt.Color(0, 0, 0));
+
+        time.setBackground(new java.awt.Color(255, 255, 255));
+        time.setFont(new java.awt.Font("Stencil", 1, 18)); // NOI18N
+        time.setForeground(new java.awt.Color(255, 255, 255));
+        time.setText("Time");
+
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
+                .addContainerGap(793, Short.MAX_VALUE)
+                .addComponent(time, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(59, 59, 59))
+        );
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(time, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jPanel6.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 780, 910, 40));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -287,13 +330,13 @@ public class Chef_view extends javax.swing.JFrame implements Observer {
             );
             boolean updateCustomer = ManageOrderController.updateCustomer(orderDTO);
             if (updateCustomer) {
-                JOptionPane.showMessageDialog(this, "Order has been taken Successfully");
+                JOptionPane.showMessageDialog(this, "Order faild" );
                 loadAllOrders();
 
                 getAllOrders();
 //                clearText();
             } else {
-                JOptionPane.showMessageDialog(this, "Order faild");
+                JOptionPane.showMessageDialog(this,"Order has been taken Successfully");
             }
         } catch (Exception ex) {
             Logger.getLogger(Chef_view.class.getName()).log(Level.SEVERE, null, ex);
@@ -320,6 +363,37 @@ public class Chef_view extends javax.swing.JFrame implements Observer {
 //        txttp.setText(tp);
 //        txtqty.setText(qty);
     }//GEN-LAST:event_tblchefMouseEntered
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    try {
+            String ststus = "Finish";
+            OrderDTO orderDTO = new OrderDTO(
+                    txtoid.getText(),
+                    txtrid.getText(),
+                    txtdate.getText(),
+                    txttime.getText(),
+                    txtcustname.getText(),
+                    txttp.getText(),
+                    Integer.parseInt(txtqty.getText()),
+                    ststus
+            );
+            boolean updateCustomer = ManageOrderController.updateCustomer(orderDTO);
+            if (updateCustomer) {
+                JOptionPane.showMessageDialog(this, "Order has been taken Successfully");
+                loadAllOrders();
+
+                getAllOrders();
+//                clearText();
+            } else {
+                JOptionPane.showMessageDialog(this, "Order faild");
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(Chef_view.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
+        
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -375,9 +449,11 @@ public class Chef_view extends javax.swing.JFrame implements Observer {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField9;
     private javax.swing.JTable tblchef;
+    private javax.swing.JLabel time;
     private javax.swing.JTextField txtcustname;
     private javax.swing.JTextField txtdate;
     private javax.swing.JTextField txtoid;
@@ -451,5 +527,25 @@ public class Chef_view extends javax.swing.JFrame implements Observer {
         
     }
 
+    private void getLocalTime() {
+         new Thread(new Runnable() {
+             @Override
+             public void run() {
+                 while(true){
+                     Date curDate =new Date();
+                     SimpleDateFormat dateFormat=new SimpleDateFormat("HH:mm:ss aa");
+                     String currenTime=dateFormat.format(curDate);
+                     
+                     time.setText(currenTime);
+                      
+                     try {
+                         Thread.sleep(1000);
+                     } catch (InterruptedException ex) {
+                        
+                     }
+                 }
+             }
+         }).start();
+    }
     
 }
